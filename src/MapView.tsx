@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
+import ObservationsLayer from "./ObservationsLayer";
 
 type Meta = {
   minZoom: number;
@@ -10,6 +11,30 @@ type Meta = {
 };
 
 const EXTRA_ZOOM = 2; // allow zoom beyond native tiles (scaled/blurry)
+
+function EditButton({
+  editMode,
+  onClick,
+}: {
+  editMode: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      style={{
+        position: "absolute",
+        height: 40,
+        width: 100,
+        top: 10,
+        left: 50,
+        zIndex: 1000,
+      }}
+      onClick={onClick}
+    >
+      Edit Map {editMode ? "ON" : "OFF"}
+    </button>
+  );
+}
 
 function FitToMeta({ meta }: { meta: Meta }) {
   const map = useMap();
@@ -40,6 +65,8 @@ function FitToMeta({ meta }: { meta: Meta }) {
 
 export function MapView() {
   const [meta, setMeta] = useState<Meta | null>(null);
+
+  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     fetch("/api/tiles/metadata")
@@ -75,6 +102,11 @@ export function MapView() {
         maxZoom={uiMaxZoom}
         noWrap
       />
+      <EditButton
+        editMode={editMode}
+        onClick={() => setEditMode((prev) => !prev)}
+      />
+      <ObservationsLayer editMode={editMode} />
     </MapContainer>
   );
 }
