@@ -74,8 +74,6 @@ function FitToMeta({ meta }: { meta: Meta }) {
     );
     const bounds = L.latLngBounds(sw, ne);
 
-    map.fitBounds(bounds, { maxZoom: meta.maxZoom });
-
     map.setMaxBounds(bounds);
     (map as any).options.maxBoundsViscosity = 1.0;
   }, [map, meta]);
