@@ -1,0 +1,30 @@
+.map-view-root {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+}
+
+.map-view-canvas {
+  height: 100%;
+  width: 100%;
+}
+
+.map-view-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.map-view-controls {
+  pointer-events: auto;
+}
+
+.map-edit-button {
+  position: absolute;
+  top: 10px;
+  left: 50px;
+  z-index: 1000;
+  width: 100px;
+  height: 40px;
+}

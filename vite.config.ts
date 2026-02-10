@@ -6,7 +6,6 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": "http://localhost:8080",
-      "/tiles": "http://localhost:8080",
       "/icons": "http://localhost:8080",
       "/observations": "http://localhost:8080"
     }
