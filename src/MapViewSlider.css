@@ -1,7 +1,88 @@
 .map-version-slider-wrap {
-  position: absolute;
-  top: 10px;
-  left: 200px;
-  z-index: 1000;
-  width: clamp(220px, 40vw, 420px);
+  position: static;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.map-version-slider.MuiSlider-root {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  display: block;
+  overflow: visible;
+}
+
+.map-version-slider-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 0;
+}
+
+.map-version-slider-title {
+  color: #4b5b70;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.map-version-slider-value {
+  color: #111827;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.map-version-ticks {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .map-version-slider-header {
+    justify-content: flex-start;
+  }
+
+  .map-version-slider-title {
+    font-size: 0.66rem;
+  }
+
+  .map-version-slider-value {
+    display: none;
+  }
+
+  .map-version-ticks {
+    display: flex;
+    align-items: center;
+    margin-top: 2px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #4b5b70;
+    line-height: 1.1;
+  }
+
+  .map-version-tick {
+    flex: 1;
+    white-space: nowrap;
+  }
+
+  .map-version-tick.is-first {
+    text-align: left;
+  }
+
+  .map-version-tick.is-middle {
+    text-align: center;
+  }
+
+  .map-version-tick.is-last {
+    text-align: right;
+  }
+
+  .map-version-tick.is-active {
+    color: #111827;
+    font-weight: 700;
+  }
 }

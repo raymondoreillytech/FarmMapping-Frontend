@@ -20,7 +20,14 @@ type Meta = {
   bounds3857: { minX: number; minY: number; maxX: number; maxY: number };
 };
 
-const EXTRA_ZOOM = 2; // allow zoom beyond native tiles (scaled/blurry)
+const EXTRA_ZOOM = 1; // allow zoom beyond native tiles (scaled/blurry)
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? "")
+  .trim()
+  .replace(/\/+$/, "");
+
+function apiUrl(path: string) {
+  return API_BASE_URL ? `${API_BASE_URL}${path}` : path;
+}
 
 function MapVersionSlider({
   value,
@@ -29,20 +36,45 @@ function MapVersionSlider({
   value: number;
   onChange: (value: number) => void;
 }) {
+  const selectedMark = MAP_VERSION_MARKS.find((item) => item.value === value);
+  const selectedLabel = selectedMark ? selectedMark.label : `Version ${value}`;
+  const sliderMarks = MAP_VERSION_MARKS.map((item) => ({ value: item.value }));
+
   return (
     <div className="map-version-slider-wrap">
+      <div className="map-version-slider-header">
+        <span className="map-version-slider-title">Date</span>
+        <span className="map-version-slider-value">{selectedLabel}</span>
+      </div>
       <Slider
+        className="map-version-slider"
         aria-label="Map Version"
         min={MAP_VERSION_MIN}
         max={MAP_VERSION_MAX}
         getAriaValueText={mapVersionValueText}
         step={null}
-        valueLabelDisplay="auto"
-        marks={MAP_VERSION_MARKS}
+        valueLabelDisplay="off"
+        marks={sliderMarks}
         sx={mapVersionSliderSx}
         value={value}
         onChange={(_, v) => onChange(v as number)}
       />
+      <div className="map-version-ticks" aria-hidden="true">
+        {MAP_VERSION_MARKS.map((item, index) => (
+          <span
+            key={item.value}
+            className={`map-version-tick${
+              index === 0
+                ? " is-first"
+                : index === MAP_VERSION_MARKS.length - 1
+                  ? " is-last"
+                  : " is-middle"
+            }${item.value === value ? " is-active" : ""}`}
+          >
+            {item.label}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }
@@ -55,7 +87,10 @@ function EditButton({
   onClick: () => void;
 }) {
   return (
-    <button className="map-edit-button" onClick={onClick}>
+    <button
+      className={`map-edit-button${editMode ? " is-on" : ""}`}
+      onClick={onClick}
+    >
       Edit Map {editMode ? "ON" : "OFF"}
     </button>
   );
@@ -73,6 +108,7 @@ function FitToMeta({ meta }: { meta: Meta }) {
       L.point(b.maxX, b.maxY),
     );
     const bounds = L.latLngBounds(sw, ne);
+
     map.setMaxBounds(bounds);
     (map as any).options.maxBoundsViscosity = 1.0;
   }, [map, meta]);
@@ -89,7 +125,9 @@ export function MapView() {
 
   useEffect(() => {
     fetch(
-      `/api/tiles/metadata?version=${encodeURIComponent(String(sliderValue))}`,
+      apiUrl(
+        `/api/tiles/metadata?version=${encodeURIComponent(String(sliderValue))}`,
+      ),
     )
       .then((r) => {
         if (!r.ok) throw new Error(`metadata failed: ${r.status}`);
@@ -104,21 +142,27 @@ export function MapView() {
   if (!meta.tileUrlTemplate) {
     throw new Error("metadata missing tileUrlTemplate");
   }
+  const tileUrlTemplate = meta.tileUrlTemplate.startsWith("/")
+    ? apiUrl(meta.tileUrlTemplate)
+    : meta.tileUrlTemplate;
   const uiMaxZoom = meta.maxZoom + EXTRA_ZOOM;
 
   return (
     <div className="map-view-root">
       <div className="map-view-canvas">
         <MapContainer
-          center={[0, 0]}
-          zoom={1}
+          center={[
+            (meta.bounds3857.maxX - meta.bounds3857.minX) / 2,
+            (meta.bounds3857.maxY - meta.bounds3857.minY) / 2,
+          ]}
+          zoom={meta.minZoom + 2}
           minZoom={meta.minZoom}
           maxZoom={uiMaxZoom}
           style={{ height: "100%", width: "100%" }}
         >
           <FitToMeta meta={meta} />
           <TileLayer
-            url={meta.tileUrlTemplate}
+            url={tileUrlTemplate}
             minZoom={meta.minZoom}
             maxNativeZoom={meta.maxZoom}
             maxZoom={uiMaxZoom}
@@ -130,11 +174,15 @@ export function MapView() {
       </div>
       <div className="map-view-overlay">
         <div className="map-view-controls">
-          <MapVersionSlider value={sliderValue} onChange={setSliderValue} />
-          <EditButton
-            editMode={editMode}
-            onClick={() => setEditMode((prev) => !prev)}
-          />
+          <div className="map-slider-card">
+            <MapVersionSlider value={sliderValue} onChange={setSliderValue} />
+          </div>
+          {false && (
+            <EditButton
+              editMode={editMode}
+              onClick={() => setEditMode((prev) => !prev)}
+            />
+          )}
         </div>
       </div>
     </div>
