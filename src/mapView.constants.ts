@@ -1,7 +1,7 @@
 export const MAP_VERSION_MARKS = [
-  { value: 2, label: "Aug 25"},
-  { value: 3, label: "Dec 25"},
-  { value: 4, label: "Jan 26"},
+  { value: 2, label: "Aug 2025"},
+  { value: 3, label: "Dec 2025"},
+  { value: 4, label: "Jan 2026"},
 ];
 
 export const MAP_VERSION_MIN = MAP_VERSION_MARKS[0].value;
