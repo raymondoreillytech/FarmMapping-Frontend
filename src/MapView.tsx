@@ -2,15 +2,12 @@ import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 import ObservationsLayer from "./ObservationsLayer";
-import { Slider } from "@mui/material";
 import {
-  MAP_VERSION_MARKS,
-  MAP_VERSION_MAX,
+  API_BASE_URL,
   MAP_VERSION_MIN,
-  mapVersionValueText,
+  SHOW_EDIT_BUTTON,
 } from "./mapView.constants";
-import { mapVersionSliderSx } from "./mapView.styles";
-import "./MapViewSlider.css";
+import MapControls from "./MapControls";
 import "./MapView.css";
 
 type Meta = {
@@ -21,79 +18,9 @@ type Meta = {
 };
 
 const EXTRA_ZOOM = 1; // allow zoom beyond native tiles (scaled/blurry)
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? "")
-  .trim()
-  .replace(/\/+$/, "");
 
 function apiUrl(path: string) {
   return API_BASE_URL ? `${API_BASE_URL}${path}` : path;
-}
-
-function MapVersionSlider({
-  value,
-  onChange,
-}: {
-  value: number;
-  onChange: (value: number) => void;
-}) {
-  const selectedMark = MAP_VERSION_MARKS.find((item) => item.value === value);
-  const selectedLabel = selectedMark ? selectedMark.label : `Version ${value}`;
-  const sliderMarks = MAP_VERSION_MARKS.map((item) => ({ value: item.value }));
-
-  return (
-    <div className="map-version-slider-wrap">
-      <div className="map-version-slider-header">
-        <span className="map-version-slider-title">Date</span>
-        <span className="map-version-slider-value">{selectedLabel}</span>
-      </div>
-      <Slider
-        className="map-version-slider"
-        aria-label="Map Version"
-        min={MAP_VERSION_MIN}
-        max={MAP_VERSION_MAX}
-        getAriaValueText={mapVersionValueText}
-        step={null}
-        valueLabelDisplay="off"
-        marks={sliderMarks}
-        sx={mapVersionSliderSx}
-        value={value}
-        onChange={(_, v) => onChange(v as number)}
-      />
-      <div className="map-version-ticks" aria-hidden="true">
-        {MAP_VERSION_MARKS.map((item, index) => (
-          <span
-            key={item.value}
-            className={`map-version-tick${
-              index === 0
-                ? " is-first"
-                : index === MAP_VERSION_MARKS.length - 1
-                  ? " is-last"
-                  : " is-middle"
-            }${item.value === value ? " is-active" : ""}`}
-          >
-            {item.label}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function EditButton({
-  editMode,
-  onClick,
-}: {
-  editMode: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      className={`map-edit-button${editMode ? " is-on" : ""}`}
-      onClick={onClick}
-    >
-      Edit Map {editMode ? "ON" : "OFF"}
-    </button>
-  );
 }
 
 function FitToMeta({ meta }: { meta: Meta }) {
@@ -172,17 +99,13 @@ export function MapView() {
         </MapContainer>
       </div>
       <div className="map-view-overlay">
-        <div className="map-view-controls">
-          <div className="map-slider-card">
-            <MapVersionSlider value={sliderValue} onChange={setSliderValue} />
-          </div>
-          {false && (
-            <EditButton
-              editMode={editMode}
-              onClick={() => setEditMode((prev) => !prev)}
-            />
-          )}
-        </div>
+        <MapControls
+          sliderValue={sliderValue}
+          onSliderChange={setSliderValue}
+          editMode={editMode}
+          onToggleEdit={() => setEditMode((prev) => !prev)}
+          showEditButton={SHOW_EDIT_BUTTON}
+        />
       </div>
     </div>
   );

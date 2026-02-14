@@ -12,3 +12,11 @@ export const mapVersionValueText = (value: number) => {
   const mark = MAP_VERSION_MARKS.find((item) => item.value === value);
   return mark ? `Version ${value} (${mark.label})` : `Version ${value}`;
 };
+
+export const SHOW_EDIT_BUTTON =
+  import.meta.env.VITE_SHOW_EDIT_BUTTON === "true";
+
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL.trim().replace(
+  /\/+$/,
+  "",
+);
