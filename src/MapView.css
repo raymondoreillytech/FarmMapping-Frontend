@@ -2,11 +2,27 @@
   position: relative;
   height: 100vh;
   width: 100vw;
+  background: #fff;
 }
 
 .map-view-canvas {
   height: 100%;
   width: 100%;
+  background: #fff;
+}
+
+.leaflet-container {
+  background: #fff !important;
+}
+
+.leaflet-pane,
+.leaflet-tile-pane,
+.leaflet-overlay-pane,
+.leaflet-shadow-pane,
+.leaflet-marker-pane,
+.leaflet-tooltip-pane,
+.leaflet-popup-pane {
+  background: transparent !important;
 }
 
 .map-view-overlay {
@@ -31,9 +47,13 @@
   padding: 5px 8px;
   border-radius: 10px;
   border: 1px solid rgba(15, 23, 42, 0.12);
-  background: rgba(255, 255, 255, 0.92);
+  background: #e2e8f0;
   box-shadow: 0 6px 16px rgba(15, 23, 42, 0.14);
   backdrop-filter: blur(8px);
+}
+
+.leaflet-control-zoom a {
+  background: #e2e8f0;
 }
 
 .map-edit-button {

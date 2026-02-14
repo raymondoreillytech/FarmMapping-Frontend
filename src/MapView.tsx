@@ -166,7 +166,6 @@ export function MapView() {
             minZoom={meta.minZoom}
             maxNativeZoom={meta.maxZoom}
             maxZoom={uiMaxZoom}
-            tms={true}
             noWrap
           />
           <ObservationsLayer editMode={editMode} />
