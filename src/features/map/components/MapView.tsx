@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
-import ObservationsLayer from "./ObservationsLayer";
+import ObservationsLayer from "../layers/ObservationsLayer";
 import {
   API_BASE_URL,
   MAP_VERSION_MIN,
   SHOW_EDIT_BUTTON,
-} from "./mapView.constants";
+} from "../config/mapView.constants";
 import MapControls from "./MapControls";
-import "./MapView.css";
+import "../styles/MapView.css";
 
 type Meta = {
   minZoom: number;

@@ -4,9 +4,9 @@ import {
   MAP_VERSION_MAX,
   MAP_VERSION_MIN,
   mapVersionValueText,
-} from "./mapView.constants";
-import { mapVersionSliderSx } from "./mapView.styles";
-import "./MapViewSlider.css";
+} from "../config/mapView.constants";
+import { mapVersionSliderSx } from "../config/mapView.styles";
+import "../styles/MapViewSlider.css";
 
 type MapVersionSliderProps = {
   value: number;
