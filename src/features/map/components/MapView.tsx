@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 import ObservationsLayer from "../layers/ObservationsLayer";
+import ZonesLayer from "../layers/ZonesLayer";
 import {
   API_BASE_URL,
-  MAP_VERSION_MIN,
+  MAP_VERSION_MAX,
   SHOW_EDIT_BUTTON,
 } from "../config/mapView.constants";
 import MapControls from "./MapControls";
+import LayerControls from "./LayerControls";
 import "../styles/MapView.css";
 
 type Meta = {
@@ -47,8 +49,10 @@ export function MapView() {
   const [meta, setMeta] = useState<Meta | null>(null);
 
   const [editMode, setEditMode] = useState(false);
+  const [showObservationsLayer, setShowObservationsLayer] = useState(false);
+  const [showZonesLayer, setShowZonesLayer] = useState(false);
 
-  const [sliderValue, setSliderValue] = useState(MAP_VERSION_MIN);
+  const [sliderValue, setSliderValue] = useState(MAP_VERSION_MAX);
 
   useEffect(() => {
     fetch(
@@ -95,16 +99,23 @@ export function MapView() {
             maxZoom={uiMaxZoom}
             noWrap
           />
-          <ObservationsLayer editMode={editMode} />
+          {showZonesLayer && <ZonesLayer bounds3857={meta.bounds3857} />}
+          {showObservationsLayer && <ObservationsLayer editMode={editMode} />}
         </MapContainer>
       </div>
       <div className="map-view-overlay">
         <MapControls
           sliderValue={sliderValue}
           onSliderChange={setSliderValue}
+        />
+        <LayerControls
           editMode={editMode}
           onToggleEdit={() => setEditMode((prev) => !prev)}
           showEditButton={SHOW_EDIT_BUTTON}
+          showObservations={showObservationsLayer}
+          showZones={showZonesLayer}
+          onToggleObservations={setShowObservationsLayer}
+          onToggleZones={setShowZonesLayer}
         />
       </div>
     </div>

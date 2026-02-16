@@ -43,6 +43,21 @@
   gap: 8px;
 }
 
+.map-view-layer-controls {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  pointer-events: auto;
+}
+
+.map-layer-stack {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  max-width: calc(100vw - 16px);
+  gap: 8px;
+}
+
 .map-slider-card {
   padding: 5px 8px;
   border-radius: 10px;
@@ -52,8 +67,81 @@
   backdrop-filter: blur(8px);
 }
 
+.map-layer-card {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: #e2e8f0;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.14);
+  backdrop-filter: blur(8px);
+}
+
+.map-layer-card-title {
+  color: #4b5b70;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.map-layer-options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 6px;
+  width: max-content;
+}
+
+.map-layer-edit-below {
+  width: 100%;
+}
+
+.map-layer-edit-below.is-hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.map-layer-edit-below .map-edit-button {
+  width: 100%;
+  text-align: center;
+}
+
+.map-layer-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #111827;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.map-layer-option input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: #0f172a;
+}
+
 .leaflet-control-zoom a {
   background: #e2e8f0;
+}
+
+.zone-label-tooltip {
+  background: rgba(15, 23, 42, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #f8fafc;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.35);
+}
+
+.zone-label-tooltip::before {
+  display: none;
 }
 
 .map-edit-button {
@@ -87,10 +175,30 @@
     gap: 10px;
   }
 
+  .map-view-layer-controls {
+    top: 12px;
+    right: 12px;
+  }
+
   .map-slider-card {
     padding: 12px;
     border-radius: 12px;
     box-shadow: 0 10px 24px rgba(15, 23, 42, 0.14);
+  }
+
+  .map-layer-card {
+    width: 230px;
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.14);
+  }
+
+  .map-layer-card-title {
+    font-size: 0.66rem;
+  }
+
+  .map-layer-option {
+    font-size: 0.8rem;
   }
 
   .map-edit-button {

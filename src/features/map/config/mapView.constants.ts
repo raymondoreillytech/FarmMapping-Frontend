@@ -16,7 +16,6 @@ export const mapVersionValueText = (value: number) => {
 export const SHOW_EDIT_BUTTON =
   import.meta.env.VITE_SHOW_EDIT_BUTTON === "true";
 
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL.trim().replace(
-  /\/+$/,
-  "",
-);
+const rawApiBaseUrl = (import.meta.env.VITE_API_BASE_URL ?? "").toString();
+
+export const API_BASE_URL = rawApiBaseUrl.trim().replace(/\/+$/, "");
