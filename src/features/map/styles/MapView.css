@@ -67,6 +67,50 @@
   backdrop-filter: blur(8px);
 }
 
+.map-version-message-card {
+  position: relative;
+  padding: 6px 8px;
+  padding-right: 24px;
+  border-radius: 10px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: #e2e8f0;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.14);
+  backdrop-filter: blur(8px);
+}
+
+.map-version-message-close {
+  position: absolute;
+  top: 3px;
+  right: 4px;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #4b5b70;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.map-version-message-close:hover {
+  color: #111827;
+}
+
+.map-version-message-close:focus-visible {
+  outline: 1px solid #0f172a;
+  border-radius: 999px;
+}
+
+.map-version-message-text {
+  margin: 0;
+  color: #122032;
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
 .map-layer-card {
   width: 100%;
   box-sizing: border-box;
@@ -184,6 +228,25 @@
     padding: 12px;
     border-radius: 12px;
     box-shadow: 0 10px 24px rgba(15, 23, 42, 0.14);
+  }
+
+  .map-version-message-card {
+    padding: 9px 12px;
+    padding-right: 28px;
+    border-radius: 12px;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.14);
+  }
+
+  .map-version-message-close {
+    top: 5px;
+    right: 7px;
+    width: 18px;
+    height: 18px;
+    font-size: 0.8rem;
+  }
+
+  .map-version-message-text {
+    font-size: 0.74rem;
   }
 
   .map-layer-card {

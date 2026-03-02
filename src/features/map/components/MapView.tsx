@@ -86,12 +86,13 @@ export function MapView() {
             (meta.bounds3857.maxX - meta.bounds3857.minX) / 2,
             (meta.bounds3857.maxY - meta.bounds3857.minY) / 2,
           ]}
-          zoom={meta.minZoom + 2}
+          zoom={meta.minZoom}
           minZoom={meta.minZoom}
           maxZoom={uiMaxZoom}
           style={{ height: "100%", width: "100%" }}
         >
           <FitToMeta meta={meta} />
+
           <TileLayer
             url={tileUrlTemplate}
             minZoom={meta.minZoom}
