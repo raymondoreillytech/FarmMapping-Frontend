@@ -23,7 +23,7 @@ type Point3857 = {
 };
 
 function toLatLng(x: number, y: number) {
-  return (L.Projection as any).SphericalMercator.unproject(L.point(x, y));
+  return L.Projection.SphericalMercator.unproject(L.point(x, y));
 }
 
 function rectangleZone(

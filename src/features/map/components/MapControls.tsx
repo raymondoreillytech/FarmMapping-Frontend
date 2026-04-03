@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import MapVersionSlider from "./MapVersionSlider";
 import {
   getMapVersionMessage,
@@ -21,11 +21,15 @@ export default function MapControls({
     : "";
   const [dismissedMessageKey, setDismissedMessageKey] = useState("");
 
-  useEffect(() => {
-    if (!versionMessageKey) {
+  function handleSliderChange(value: number) {
+    const nextMark = MAP_VERSION_MARKS.find((mark) => mark.value === value);
+
+    if (!nextMark?.messageKey) {
       setDismissedMessageKey("");
     }
-  }, [versionMessageKey]);
+
+    onSliderChange(value);
+  }
 
   const showVersionMessage =
     Boolean(versionMessage) && dismissedMessageKey !== versionMessageKey;
@@ -33,7 +37,7 @@ export default function MapControls({
   return (
     <div className="map-view-controls">
       <div className="map-slider-card">
-        <MapVersionSlider value={sliderValue} onChange={onSliderChange} />
+        <MapVersionSlider value={sliderValue} onChange={handleSliderChange} />
       </div>
       {showVersionMessage && (
         <div className="map-version-message-card">

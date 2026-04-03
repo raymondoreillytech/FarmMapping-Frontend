@@ -48,6 +48,7 @@
   top: 8px;
   right: 8px;
   pointer-events: auto;
+  transition: right 160ms ease;
 }
 
 .map-layer-stack {
@@ -133,32 +134,55 @@
 .map-layer-options {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 2px;
   margin-top: 6px;
   width: max-content;
 }
 
-.map-layer-edit-below {
+.map-layer-actions {
   width: 100%;
-}
-
-.map-layer-edit-below.is-hidden {
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.map-layer-edit-below .map-edit-button {
-  width: 100%;
-  text-align: center;
 }
 
 .map-layer-option {
   display: flex;
   align-items: center;
-  gap: 8px;
   color: #111827;
   font-size: 0.78rem;
   font-weight: 600;
+  margin: 0;
+}
+
+.map-layer-option .MuiTypography-root {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.map-layer-helper {
+  margin-top: 8px;
+  color: #4b5b70;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.map-layer-helper-error {
+  color: #b42318;
+}
+
+.map-location-pick-banner {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  max-width: calc(100vw - 32px);
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.92);
+  color: #f8fafc;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.22);
+  pointer-events: none;
 }
 
 .map-layer-option input[type="checkbox"] {
@@ -224,6 +248,10 @@
     right: 12px;
   }
 
+  .map-view-layer-controls.is-shifted {
+    right: calc(420px + 20px);
+  }
+
   .map-slider-card {
     padding: 12px;
     border-radius: 12px;
@@ -262,6 +290,10 @@
 
   .map-layer-option {
     font-size: 0.8rem;
+  }
+
+  .map-layer-helper {
+    font-size: 0.75rem;
   }
 
   .map-edit-button {
